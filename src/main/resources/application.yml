@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/BlueWhale?characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8080
+
+aliyun:
+  oss:
+    endpoint:
+    accessKeyId:
+    accessKeySecret:
+    bucketName:
+
+alipay:
+  appId: 9021000149679684
+  appPrivateKey: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCCy6Osekvhxj/HWxHXLQXQ3RRvPbvS3RxwYuuX+TzLvXBun+Q0A82bRVYt3ROA2AV+ATfKb8b/mIGdCTxMBm2aHqn6Uvv16/R5a/s5evD1TjiuIhumD76Vb3C/j79KpFBMA+WqKw0VlOe/G45jFaheQT58c995/ELYt+4qQ9UdyyOa6E/xywhNdNhmDZghhlv+pX3znPqIYE04YylRTSGdLLsDuPFZYEmmCVV7outoh2Mh5sb2t7K/YCzGus0fgE6mP47ApfvFik6pweW4wLwgBuH3Al2IUSzUkLBaL+ja01lSObP1irFsEkKZekcGxhFQE8GL7spw+5qlGrWe5WSDAgMBAAECggEAUYrXnb4Y9Mb+GDFkq/u7tn0+MiQQpuOGyWJCctrF1ldicvVn9i2wz26ozasYb6k9s1LbD3AkZlET7W1GlDcluYIIgrGdt7HFFrYFR86nzqdXmuhUyHDkZpG1fxgFMGnETb/YPQDeBWhyGqj5Wji0YR7X8Arldk2Y9zekWeE0Sn/hzA6YrEVQQ0mqy+d1DXxYawSX5AeC7sBtrzWGimAeSfl5d2ePKfvrFV5k/zAOPr9KyLnNMxnHzJ51GdUEvXsz+eAl6f1+yqFwYcn8z2Jg2Iudxmm0shP6ctas34SN4E3QzBBeIxPFam7H8O6NFizcoubOEZmdO/0PGIhHThCSQQKBgQDprdbZ5PwZOtZOcFVwy6CSJZE4Y7vB6SVMbGpC4ft0n2Iu616qY2wdeQfpgh/+FbuFo6SW+e54w+b1HbzlNM/2HW/i28yePR0Sskv3wb07oxpGyGpRbwIuJ9ZahjMN4JbMItkCS0hOQJcQzD+Kkh/axoAGTZMwaPBghQKWaJZAUQKBgQCPSfwQ17N/7gDoiRjmrl8nX1HU8+UjLfCaRMpiyFlg1rIAisf7/UpRYqrdz4zklYpa4V068lQxIf4pqTRAC6vc8eWqQGF2PmDcDsD82xyc7ZOux9dfftHUcH7wbKJIm4170Ux0cOrHVJt/ZY5Bq5yIqx00h9SMMw/IGA2Ywz+WkwKBgHIxK18LkU5a/EMUjgwy1eLVTOP7iNM3taxlBoBsok7ZXEeFaZtmPn0gmgc4OZ4WzK5/y3yj4i9NvF1oDNkNN9sTg4ue0Z06TCzIyGroWCr+h2azpZDp6GzZttxB3E0ZxVc4aEfAtjLXSXtB9IMo6Twl6IYr/pOXlG/2T89kiJghAoGAKkluT1YpDi8iK34SUDnTsR3rW4pi7B/pqs10YPS5k9+ohopufIqCvUP+IxnWfbs4Kpvp1LShbiKXDJp35hLLtJfa7IS1fpzoHulnwPe1GQbwF5u4juExcZ2FiNS2i/EELy9UfeS5FPx+K3nAItdPifHd25veeUW0eZvHn3a3tGsCgYBx6Bk+OyCehwom35oeoHpfuF1QnWklR+YyYIUilPlVEJKkf/Gv798jjY3RXUasiK9NoFDn6jsAAsCyfz+QrqSx3qVLOu2kUj+E7uHSd5yKksdDEnMCJcVihwvjOvSteiTsRVRFZNHSx85U42keD9j2bBkXg9KGsGbQI0RF1IXlRQ==
+  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2K8V3gd4mFIoc+ls45Q8Kf49vZWF1RRf00bK5olr3zqaeZ8dj/Bxb/x/B2CmxFkShCpRguO0reqdNQTcfbVhwfP4ivKR+ORU1T3R4MEi21B1SZwKNSamyEwTPRurKNSmY9gRwaLKDiYnrprlbhEtRcvLaoS0coKiVH/iDyqM74SgNINnPp7jW+p8Dkw4HQcTY+OYqp4rARDVo5QHMQJWn0g1EwGUy6J1AoraZRhYneVUNbA5WY8ZjySYq4pUfcDTkAczQqcaZ9VpgTenMijVyZ+cOSYFvX0WWXr1fJ7dc+raRHxfI3CWrr3FXaoyOPHL+QxKyh7JYFeuy8UM6xpMmwIDAQAB
+  notifyUrl: http://cd286ad6.natappfree.cc/api/orders/notify
+  serverUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+  charset: UTF-8
+  signType: RSA2
