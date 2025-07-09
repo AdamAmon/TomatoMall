@@ -1,0 +1,12 @@
+# IDE related
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Maven build folder
+/target/
+
+# OS generated files
+.DS_Store
+Thumbs.db
