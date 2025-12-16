@@ -1,12 +1,7 @@
 package com.example.tomatomall.service;
 
 import com.example.tomatomall.enums.PaymentMethodEnum;
-import com.example.tomatomall.vo.AccountVO;
 import com.example.tomatomall.vo.OrdersVO;
-import com.example.tomatomall.vo.Response;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 public interface OrdersService {
     //创建订单（奇妙的命名）

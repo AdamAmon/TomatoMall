@@ -13,20 +13,14 @@ import com.example.tomatomall.repository.StockpileRepository;
 import com.example.tomatomall.service.ProductService;
 import com.example.tomatomall.util.SecurityUtil;
 import com.example.tomatomall.vo.CommentVO;
-import com.example.tomatomall.vo.InfoVO;
 import com.example.tomatomall.vo.ProductVO;
 import com.example.tomatomall.vo.StockpileVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 @Service
 public class ProductServicelmpl implements ProductService {
@@ -76,10 +70,7 @@ public class ProductServicelmpl implements ProductService {
 
     @Override
     public Boolean updateProduct(ProductVO productVO){
-        Product product=productRepository.findById(productVO.getId());
-        if(product==null){
-            return false;
-        }
+        Product product=Objects.requireNonNull(productRepository.findById(productVO.getId()));
         if(productVO.getTitle()!=null){
             product.setTitle(productVO.getTitle());
         }
@@ -98,19 +89,20 @@ public class ProductServicelmpl implements ProductService {
         if(productVO.getTag()!=null){
             product.setTag(productVO.getTag());
         }
-        Stockpile stockpile=stockpileRepository.findByProductId(product.getId());
+        Stockpile stockpile=Objects.requireNonNull(stockpileRepository.findByProductId(product.getId()));
         Product product1=productRepository.save(product);
         if(productVO.getSpecifications()!=null){
             int toId=productVO.getId();
             List<Info> infos=infoRepository.findAllByProductId(toId);
             if(infos!=null){
                 for(int i=0;i<infos.size();i++){
-                    infoRepository.delete(infos.get(i));
+                    Info infoDel = java.util.Objects.requireNonNull(infos.get(i));
+                    infoRepository.delete(infoDel);
                 }
             }
             Info info = new Info();
             for(int i=0;i<productVO.getSpecifications().size();i++){
-                info=productVO.getSpecifications().get(i).toPO();
+                info=java.util.Objects.requireNonNull(productVO.getSpecifications().get(i).toPO());
                 info.setProductId(product1.getId());
                 infoRepository.save(info);
             }
@@ -145,8 +137,9 @@ public class ProductServicelmpl implements ProductService {
         stockpileRepository.save(stockpile);
 
         for(int i=0;i<infos.size();i++){
-            infos.get(i).setProductId(product1.getId());
-            infoRepository.save(infos.get(i));
+            Info info = java.util.Objects.requireNonNull(infos.get(i));
+            info.setProductId(product1.getId());
+            infoRepository.save(info);
         }
         product1.setStockpile(stockpile);
         product1.setSpecifications(infos);
@@ -181,7 +174,7 @@ public class ProductServicelmpl implements ProductService {
     @Override
     public StockpileVO getOneProductAmount(String id){
         int toId = Integer.parseInt(id);
-        Stockpile stockpile = stockpileRepository.findByProductId(toId);
+        Stockpile stockpile = Objects.requireNonNull(stockpileRepository.findByProductId(toId));
         return stockpile.toVO();
     }
 

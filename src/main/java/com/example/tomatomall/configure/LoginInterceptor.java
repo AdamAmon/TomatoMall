@@ -8,6 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.lang.NonNull;
 
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
@@ -19,7 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
      * 拦截器
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
+    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler){
 
         String uri = request.getRequestURI();
         String method = request.getMethod();

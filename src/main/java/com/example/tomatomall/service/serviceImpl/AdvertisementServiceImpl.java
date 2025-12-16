@@ -6,15 +6,8 @@ import com.example.tomatomall.po.Product;
 import com.example.tomatomall.repository.ProductRepository;
 import com.example.tomatomall.repository.AdvertisementRepository;
 import com.example.tomatomall.service.AdvertisementService;
-import com.example.tomatomall.service.ProductService;
-import com.example.tomatomall.util.SecurityUtil;
-import com.example.tomatomall.util.TokenUtil;
-import com.example.tomatomall.vo.AccountVO;
-import com.example.tomatomall.vo.ProductVO;
 import com.example.tomatomall.vo.AdvertisementVO;
-import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -87,12 +80,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             adv_tt.setContent(advVO.getContent());
             adv_tt.setAdvUrl(advVO.getAdvUrl());
             adv_tt.setProductId(advVO.getProductId());
-            Advertisement aa = advertisementRepository.save(adv_tt);
+            Advertisement aa = java.util.Objects.requireNonNull(advertisementRepository.save(adv_tt));
             return aa.toVO();
 
         }else{//添加
             Advertisement adv=advVO.toPO();
-            Advertisement aa = advertisementRepository.save(adv);
+            Advertisement aa = java.util.Objects.requireNonNull(advertisementRepository.save(adv));
             return aa.toVO();
         }
     }
@@ -103,7 +96,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         if(adv==null){
             return false;
         }else{
-            advertisementRepository.delete(adv);
+            advertisementRepository.delete(java.util.Objects.requireNonNull(adv));
             return true;
         }
     }

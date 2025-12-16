@@ -1,7 +1,6 @@
 package com.example.tomatomall.repository;
 
 import com.example.tomatomall.po.CartItem;
-import com.example.tomatomall.po.Info;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

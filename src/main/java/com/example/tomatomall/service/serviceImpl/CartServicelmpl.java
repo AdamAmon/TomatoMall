@@ -7,18 +7,16 @@ import com.example.tomatomall.repository.*;
 import com.example.tomatomall.service.AccountService;
 import com.example.tomatomall.service.CartService;
 import com.example.tomatomall.util.SecurityUtil;
-import com.example.tomatomall.vo.AccountVO;
-import com.example.tomatomall.vo.ProductVO;
 import com.example.tomatomall.vo.StockpileVO;
 import com.example.tomatomall.vo.CartItemVO;
 import com.example.tomatomall.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.tomatomall.repository.CartRepository;
-import com.example.tomatomall.exception.TomatoException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CartServicelmpl implements CartService {
@@ -48,14 +46,15 @@ public class CartServicelmpl implements CartService {
 
         int pro_id = Integer.parseInt(productId);
         CartVO cartVO = getCart(userId);
-        StockpileVO stockpileVO = stockpileRepository.findByProductId(pro_id).toVO();
+        StockpileVO stockpileVO = Objects.requireNonNull(stockpileRepository.findByProductId(pro_id)).toVO();
         int num_avil = stockpileVO.getAmount()-stockpileVO.getFrozen();
         //判定获取的数量是否大于库存
         if(num_avil < quantity){
             throw TomatoException.OutOfStock();
         }else{
             stockpileVO.setFrozen(stockpileVO.getFrozen()+quantity);
-            stockpileRepository.save(stockpileVO.toPO());
+            com.example.tomatomall.po.Stockpile spSave = java.util.Objects.requireNonNull(stockpileVO.toPO());
+            stockpileRepository.save(spSave);
 
 
             List<CartItem> l = cartItemRepository.findAllByCartId(cartVO.getCartId());
@@ -78,7 +77,8 @@ public class CartServicelmpl implements CartService {
                 cartItemVO.setProductId(pro_id);
                 cartItemVO.setQuantity(quantity);
                 cartItemVO.setCartId(cartVO.getCartId());
-                cartItemRepository.save(cartItemVO.toPO());
+                com.example.tomatomall.po.CartItem ciSave = java.util.Objects.requireNonNull(cartItemVO.toPO());
+                cartItemRepository.save(ciSave);
             }
 
             //pro_id需要加
@@ -94,10 +94,11 @@ public class CartServicelmpl implements CartService {
         int flag = -1;
         for(int i=0;i<l.size();i++){
             if(l.get(i).getItemId() == cartItemId){
-                StockpileVO stockpileVO = stockpileRepository.findByProductId(l.get(i).getProductId()).toVO();
+                StockpileVO stockpileVO = Objects.requireNonNull(stockpileRepository.findByProductId(l.get(i).getProductId())).toVO();
                 int frozen_now = stockpileVO.getFrozen();
                 stockpileVO.setFrozen(frozen_now-l.get(i).getQuantity());
-                stockpileRepository.save(stockpileVO.toPO());
+                com.example.tomatomall.po.Stockpile spSave2 = java.util.Objects.requireNonNull(stockpileVO.toPO());
+                stockpileRepository.save(spSave2);
                 flag = i;
                 break;
             }
@@ -105,7 +106,8 @@ public class CartServicelmpl implements CartService {
         if(flag == -1){
             return false;
         }
-        cartItemRepository.delete(l.get(flag));
+        com.example.tomatomall.po.CartItem itemToDelete = java.util.Objects.requireNonNull(l.get(flag));
+        cartItemRepository.delete(itemToDelete);
         return true;
     }
 
@@ -118,7 +120,7 @@ public class CartServicelmpl implements CartService {
         for(int i=0;i<l.size();i++){
             if(l.get(i).getItemId() == cartItemId_n){
                 //ProductVO productVO = productRepository.findById(l.get(i).getProductId()).toVO();
-                StockpileVO stockpileVO = stockpileRepository.findByProductId(l.get(i).getProductId()).toVO();
+                StockpileVO stockpileVO = Objects.requireNonNull(stockpileRepository.findByProductId(l.get(i).getProductId())).toVO();
                 int amount_n = stockpileVO.getAmount();
                 int frozen_n = stockpileVO.getFrozen();
                 int quantity_n = l.get(i).getQuantity();
@@ -127,7 +129,8 @@ public class CartServicelmpl implements CartService {
                 }//库存不够
                 int frozen_new = frozen_n + (quantity-quantity_n);
                 stockpileVO.setFrozen(frozen_new);
-                stockpileRepository.save(stockpileVO.toPO());
+                com.example.tomatomall.po.Stockpile spSave3 = java.util.Objects.requireNonNull(stockpileVO.toPO());
+                stockpileRepository.save(spSave3);
 
                 l.get(i).setQuantity(quantity);
                 flag = i;
@@ -137,7 +140,8 @@ public class CartServicelmpl implements CartService {
         if(flag == -1){
             return false;
         }
-        cartItemRepository.save(l.get(flag));
+        com.example.tomatomall.po.CartItem itemToSave = java.util.Objects.requireNonNull(l.get(flag));
+        cartItemRepository.save(itemToSave);
         return true;
     }
 
@@ -147,7 +151,6 @@ public class CartServicelmpl implements CartService {
             CartVO cartVO = new CartVO();
             cartVO.setUserId(userId);
             cartRepository.save(cartVO.toPO());
-
             Cart cart1 = cartRepository.findByUserId(userId);
             if(cart1 == null){
                 throw new TomatoException("fail to create cart");

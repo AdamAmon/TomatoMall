@@ -1,6 +1,5 @@
 package com.example.tomatomall.controller;
 
-import com.example.tomatomall.po.CartItem;
 import com.example.tomatomall.service.CartService;
 import com.example.tomatomall.vo.Response;
 import com.example.tomatomall.vo.CartVO;

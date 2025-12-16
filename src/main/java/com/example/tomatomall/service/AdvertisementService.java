@@ -1,8 +1,6 @@
 package com.example.tomatomall.service;
 
 import com.example.tomatomall.vo.AdvertisementVO;
-import com.example.tomatomall.vo.Response;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 public interface AdvertisementService {

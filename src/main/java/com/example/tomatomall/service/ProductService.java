@@ -1,14 +1,11 @@
 package com.example.tomatomall.service;
 
 import com.example.tomatomall.enums.TagEnum;
-import com.example.tomatomall.po.Comment;
 import com.example.tomatomall.vo.CommentVO;
-import com.example.tomatomall.vo.InfoVO;
 import com.example.tomatomall.vo.ProductVO;
 import com.example.tomatomall.vo.StockpileVO;
 
 import java.util.List;
-import java.util.Set;
 
 public interface ProductService {
     //获取所有商品

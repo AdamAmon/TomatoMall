@@ -11,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.tomatomall.enums.PayEnum;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -68,7 +66,8 @@ public class AccountServiceImpl implements AccountService {
         //购物车
         CartVO cartVO = new CartVO();
         cartVO.setUserId(A.getId());
-        cartRepository.save(cartVO.toPO());
+        com.example.tomatomall.po.Cart cartSave = java.util.Objects.requireNonNull(cartVO.toPO());
+        cartRepository.save(cartSave);
 //        CartItem cartItem = new CartItem();
 //        cartItem.setQuantity(1);
 //        cartItem.setCartId(C.getCartId());
@@ -102,13 +101,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountVO getInformation(){
-        Account account=securityUtil.getCurrentAccount();
+        Account account=Objects.requireNonNull(securityUtil.getCurrentAccount());
         return account.toVO();
     }
 
     @Override
     public Boolean update(AccountVO accountVO){
-        Account account=securityUtil.getCurrentAccount();
+        Account account=java.util.Objects.requireNonNull(securityUtil.getCurrentAccount());
         if (accountVO.getPassword()!=null){
             String rawpassword = accountVO.getPassword();
             String newpassword = passwordEncoder.encode(rawpassword);
@@ -137,7 +136,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Boolean getRecommendTicket(String userId,int num){
         int toUserId=Integer.parseInt(userId);
-        Account account=accountRepository.findById(toUserId);
+        Account account=Objects.requireNonNull(accountRepository.findById(toUserId));
         account.setRecommendTicket(account.getRecommendTicket()+num);
         accountRepository.save(account);
         return true;
@@ -183,8 +182,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Boolean deleteComment(String id){
-        Comment comment=commentRepository.findById(Integer.parseInt(id));
-        Product product=productRepository.findById(comment.getProductId().intValue());
+        Comment comment=Objects.requireNonNull(commentRepository.findById(Integer.parseInt(id)));
+        Product product=Objects.requireNonNull(productRepository.findById(comment.getProductId().intValue()));
         float rat=product.getRate()*product.getCommentNum()-comment.getRate();
         product.setCommentNum(product.getCommentNum()-1);
         //更新商品的评分
@@ -216,21 +215,22 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public CommentVO updateComment(String id,String content,float rate){
       int toId=Integer.parseInt(id);
-      Comment comment=commentRepository.findById(toId);
-      Product product=productRepository.findById(comment.getProductId().intValue());
+            Comment comment=Objects.requireNonNull(commentRepository.findById(toId));
+            Product product=Objects.requireNonNull(productRepository.findById(comment.getProductId().intValue()));
       float rat=product.getRate()*product.getCommentNum()-comment.getRate()+rate;
       product.setRate(rat/product.getCommentNum());
       productRepository.save(product);
       comment.setRate(rate);
       comment.setContent(content);
-      Comment comment1=commentRepository.save(comment);
+            Comment comment1=Objects.requireNonNull(commentRepository.save(comment));
       return comment1.toVO();
     };
 
     @Override
     public Boolean vipUpdate(String amount, int userId){
         int total_amount = Integer.parseInt(amount);
-        AccountVO accountVO = accountRepository.findById(userId).toVO();
+        Account accountEntity = Objects.requireNonNull(accountRepository.findById(userId));
+        AccountVO accountVO = accountEntity.toVO();
         int vip = accountVO.getVip();
         int expe = accountVO.getExpe();
         expe += total_amount;
@@ -238,7 +238,7 @@ public class AccountServiceImpl implements AccountService {
             vip += expe/100;
             expe = expe%100;
         }
-        Account account = accountVO.toPO();
+        Account account = java.util.Objects.requireNonNull(accountVO.toPO());
         account.setVip(vip);
         account.setExpe(expe);
         accountRepository.save(account);

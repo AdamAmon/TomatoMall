@@ -2,11 +2,9 @@ package com.example.tomatomall.repository;
 
 import com.example.tomatomall.enums.TagEnum;
 import com.example.tomatomall.po.Product;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Set;
 
 public interface ProductRepository extends JpaRepository<Product,Integer> {
     Product findById(int id);

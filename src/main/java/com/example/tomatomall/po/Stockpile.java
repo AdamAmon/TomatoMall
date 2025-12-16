@@ -1,6 +1,5 @@
 package com.example.tomatomall.po;
 
-import com.example.tomatomall.vo.InfoVO;
 import com.example.tomatomall.vo.StockpileVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

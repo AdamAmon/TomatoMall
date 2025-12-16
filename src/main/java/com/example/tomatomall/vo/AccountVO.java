@@ -3,7 +3,6 @@ package com.example.tomatomall.vo;
 
 import com.example.tomatomall.enums.RoleEnum;
 import com.example.tomatomall.po.Account;
-import com.example.tomatomall.po.Cart;
 import com.example.tomatomall.po.Comment;
 import com.example.tomatomall.po.Coupon;
 import lombok.Getter;

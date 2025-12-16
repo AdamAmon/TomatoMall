@@ -1,14 +1,11 @@
 package com.example.tomatomall.po;
 
 import com.example.tomatomall.vo.CartVO;
-import com.example.tomatomall.vo.CartItemVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.LinkedList;
-import java.util.List;
 
 @Getter
 @Setter

@@ -1,29 +1,21 @@
 package com.example.tomatomall.service.serviceImpl;
 
-import com.alipay.api.domain.OrderVO;
 import com.example.tomatomall.enums.PayEnum;
 import com.example.tomatomall.enums.PaymentMethodEnum;
 import com.example.tomatomall.po.CartItem;
-import com.example.tomatomall.service.CartService;
 import com.example.tomatomall.service.OrdersService;
-import com.example.tomatomall.vo.AccountVO;
 import com.example.tomatomall.vo.OrdersVO;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.Objects;
 
-import com.example.tomatomall.exception.TomatoException;
 import com.example.tomatomall.po.Orders;
 import com.example.tomatomall.repository.*;
 import com.example.tomatomall.util.SecurityUtil;
-import com.example.tomatomall.vo.AccountVO;
-import com.example.tomatomall.vo.ProductVO;
 import com.example.tomatomall.vo.StockpileVO;
-import com.example.tomatomall.vo.OrdersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.tomatomall.exception.TomatoException;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
@@ -73,12 +65,18 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public double getTotalMoney(int orderId){
         Orders o = ordersRepository.findById(orderId);
+        if (o == null) {
+            throw new com.example.tomatomall.exception.TomatoException("order not found");
+        }
         return o.getTotal_amount();
     }
 
     @Override
     public PaymentMethodEnum getPaymentMethod(int orderId){
         Orders o = ordersRepository.findById(orderId);
+        if (o == null) {
+            throw new com.example.tomatomall.exception.TomatoException("order not found");
+        }
         return o.getPayment_method();
     }
 
@@ -87,6 +85,9 @@ public class OrdersServiceImpl implements OrdersService {
     public void updateOrderStatus(String orderId, String alipayTradeNo, String amount){
         int order_id = Integer.parseInt(orderId);
         Orders o = ordersRepository.findById(order_id);
+        if (o == null) {
+            throw new com.example.tomatomall.exception.TomatoException("order not found");
+        }
         if(o.getStatus() != PayEnum.TRADE_SUCCESS){
             o.setStatus(PayEnum.TRADE_SUCCESS);
             ordersRepository.save(o);
@@ -98,15 +99,19 @@ public class OrdersServiceImpl implements OrdersService {
     public void reduceStock(String orderId){
         int order_id = Integer.parseInt(orderId);
         Orders o = ordersRepository.findById(order_id);
+        if (o == null) {
+            throw new com.example.tomatomall.exception.TomatoException("order not found");
+        }
         List<Integer> itemsId = o.getItemsId();
         for(int i : itemsId){
             CartItem cartItem = cartItemRepository.findByItemId(i);
             int productId = cartItem.getProductId();
             int quantity = cartItem.getQuantity();
-            StockpileVO stockpileVO = stockpileRepository.findByProductId(productId).toVO();
+            StockpileVO stockpileVO = Objects.requireNonNull(stockpileRepository.findByProductId(productId)).toVO();
             int amount_now = stockpileVO.getAmount();
             stockpileVO.setAmount(amount_now-quantity);
-            stockpileRepository.save(stockpileVO.toPO());
+            com.example.tomatomall.po.Stockpile spSave = java.util.Objects.requireNonNull(stockpileVO.toPO());
+            stockpileRepository.save(spSave);
         }
         o.setItemsId(null);
         ordersRepository.save(o);
@@ -116,6 +121,9 @@ public class OrdersServiceImpl implements OrdersService {
     public void updateFailture(String orderId){
         int order_id = Integer.parseInt(orderId);
         Orders o = ordersRepository.findById(order_id);
+        if (o == null) {
+            throw new com.example.tomatomall.exception.TomatoException("order not found");
+        }
         if(o.getStatus() != PayEnum.TRADE_CLOSED){
             o.setStatus(PayEnum.TRADE_CLOSED);
             ordersRepository.save(o);

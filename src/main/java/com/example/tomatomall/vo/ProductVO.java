@@ -4,14 +4,12 @@ import com.example.tomatomall.enums.TagEnum;
 import com.example.tomatomall.po.Comment;
 import com.example.tomatomall.po.Info;
 import com.example.tomatomall.po.Product;
-import com.example.tomatomall.po.Stockpile;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

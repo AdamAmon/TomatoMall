@@ -1,7 +1,6 @@
 package com.example.tomatomall.service.serviceImpl;
 
 import com.example.tomatomall.exception.TomatoException;
-import com.example.tomatomall.po.Account;
 import com.example.tomatomall.po.Coupon;
 import com.example.tomatomall.repository.AccountRepository;
 import com.example.tomatomall.repository.CouponRepository;
@@ -29,7 +28,7 @@ public class CouponServiceImpl implements CouponService {
         coupon.setDiscount(20);
         coupon.setGetTime( System.currentTimeMillis());
         Coupon newcoupon=couponRepository.save(coupon);
-        return newcoupon.toVO();
+        return newcoupon == null ? null : newcoupon.toVO();
     }
 
     @Override
